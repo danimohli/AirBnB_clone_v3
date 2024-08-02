@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AirBnB Clone</title>
+    <link rel="stylesheet" href="../static/styles/3-header.css">
+    <link rel="stylesheet" href="../static/styles/3-footer.css">
+    <link rel="stylesheet" href="../static/styles/4-common.css">
+    <link rel="stylesheet" href="../static/styles/6-filters.css">
+    <link rel="stylesheet" href="../static/styles/8-places.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="../static/images/logo.png" alt="AirBnB logo">
+        </div>
+    </header>
+    <div class="container">
+        <section class="filters">
+            <h3>States</h3>
+            <h4>&nbsp;</h4>
+            <ul>
+                {% for state in states %}
+                    <li>
+                        {{ state.name }}
+                        <ul>
+                            {% for city in state.cities %}
+                                <li>{{ city.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h3>Amenities</h3>
+            <h4>&nbsp;</h4>
+            <ul>
+                {% for amenity in amenities %}
+                    <li>{{ amenity.name }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+        <section class="places">
+            <h3>Places</h3>
+            <ul>
+                {% for place in places %}
+                    <li>
+                        <div class="place">
+                            <h2>{{ place.name }}</h2>
+                            <div class="price_by_night">
+                                ${{ place.price_by_night }}
+                            </div>
+                            <div class="information">
+                                <div class="max_guest">{{ place.max_guest }} Guests</div>
+                                <div class="number_rooms">{{ place.number_rooms }} Bedrooms</div>
+                                <div class="number_bathrooms">{{ place.number_bathrooms }} Bathrooms</div>
+                            </div>
+                            <div class="description">
+                                {{ place.description | safe }}
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2023 AirBnB Clone</p>
+    </footer>
+</body>
+</html>
