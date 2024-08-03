@@ -3,6 +3,7 @@
 Index module for API endpoints
 Defines routes for status and object counts
 """
+
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -13,9 +14,15 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
-classes = {"users": "User", "places": "Place", "states": "State",
-           "cities": "City", "amenities": "Amenity",
-           "reviews": "Review"}
+
+classes = {
+    "users": "User",
+    "places": "Place",
+    "states": "State",
+    "cities": "City",
+    "amenities": "Amenity",
+    "reviews": "Review"
+}
 
 
 @app_views.route('/status', methods=['GET'])
