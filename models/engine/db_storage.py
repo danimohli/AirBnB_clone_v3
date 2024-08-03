@@ -41,7 +41,9 @@ class DBStorage:
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """query on the current database session"""
+        """
+        query on the current database session
+        """
         new_dict = {}
         for clss in classes:
             if cls is None or cls is classes[clss] or cls is clss:
@@ -52,25 +54,55 @@ class DBStorage:
         return (new_dict)
 
     def new(self, obj):
-        """add the object to the current database session"""
+        """
+        add the object to the current database session
+        """
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session"""
+        """
+        commit all changes of the current database session
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session obj if not None"""
+        """
+        delete from the current database session obj if not None
+        """
         if obj is not None:
             self.__session.delete(obj)
 
     def reload(self):
-        """reloads data from the database"""
+        """
+        reloads data from the database
+        """
         Base.metadata.create_all(self.__engine)
         sess_factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(sess_factory)
         self.__session = Session
 
+    def get(self, cls, id):
+        """
+        Retrieve one object based on class and ID.
+        """
+        if cls is None or id is None:
+            return None
+        return self.__session.query(cls).get(id)
+
+    def count(self, cls=None):
+        """
+        Count the number of objects in storage matching the given class.
+        """
+        if cls:
+            return self.__session.query(cls).count()
+        else:
+            count = 0
+            for model in classes.values():
+                count += self.__session.query(model).count()
+            return count
+
     def close(self):
-        """call remove() method on the private session attribute"""
+        """
+        call remove() method on the private session attribute
+        """
         self.__session.remove()
