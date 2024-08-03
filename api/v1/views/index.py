@@ -1,5 +1,8 @@
 #!/usr/bin/python3
-"""index"""
+"""
+Index module for API endpoints
+Defines routes for status and object counts
+"""
 from api.v1.views import app_views
 from flask import jsonify
 from models import storage
@@ -18,7 +21,8 @@ classes = {"users": "User", "places": "Place", "states": "State",
 @app_views.route('/status', methods=['GET'])
 def status():
     """
-    Return the status of the API
+    Route to check the status of the API
+    Returns a JSON response with status 'OK'
     """
     return jsonify({'status': 'OK'})
 
@@ -26,7 +30,8 @@ def status():
 @app_views.route('/stats', methods=['GET'])
 def count():
     """
-    get the num of each objs type
+    Route to retrieve the number of each object type
+    Returns a JSON response with the count of each object type
     """
     count_dict = {}
     for cls in classes:
