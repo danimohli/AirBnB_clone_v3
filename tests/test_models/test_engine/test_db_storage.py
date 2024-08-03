@@ -6,7 +6,10 @@ Test for db_storage
 import unittest
 from models.engine.db_storage import DBStorage
 from models.user import User
-# Import other necessary models
+"""
+Import other necessary models
+"""
+
 
 class TestDBStorage(unittest.TestCase):
     def setUp(self):
@@ -31,6 +34,7 @@ class TestDBStorage(unittest.TestCase):
         self.storage.save()
         self.assertEqual(self.storage.count(), initial_count + 1)
         self.assertEqual(self.storage.count(User), 1)
+
 
 if __name__ == "__main__":
     unittest.main()
