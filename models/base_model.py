@@ -70,6 +70,20 @@ class BaseModel:
             del new_dict["_sa_instance_state"]
         return new_dict
 
+    @property
+    def password(self):
+        """
+        password return
+        """
+        return self._password
+
+    @password.setter
+    def password(self, value):
+        """
+        Set password
+        """
+        self._password = md5(value.encode()).hexdigest()
+
     def delete(self):
         """delete the current instance from the storage"""
         models.storage.delete(self)
