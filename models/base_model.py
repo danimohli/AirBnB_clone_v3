@@ -58,31 +58,18 @@ class BaseModel:
         models.storage.new(self)
         models.storage.save()
 
-    def to_dict(self):
+    def to_dict(self, include_password=False):
         """returns a dictionary containing all keys/values of the instance"""
-        new_dict = self.__dict__.copy()
-        if "created_at" in new_dict:
-            new_dict["created_at"] = new_dict["created_at"].strftime(time)
-        if "updated_at" in new_dict:
-            new_dict["updated_at"] = new_dict["updated_at"].strftime(time)
-        new_dict["__class__"] = self.__class__.__name__
-        if "_sa_instance_state" in new_dict:
-            del new_dict["_sa_instance_state"]
-        return new_dict
-
-    @property
-    def password(self):
-        """
-        password return
-        """
-        return self._password
-
-    @password.setter
-    def password(self, value):
-        """
-        Set password
-        """
-        self._password = md5(value.encode()).hexdigest()
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__': self.__class__.__name__})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        if not include_password and 'password' in dictionary:
+            del dictionary['password']
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
+        return dictionary
 
     def delete(self):
         """delete the current instance from the storage"""
